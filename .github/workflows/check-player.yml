@@ -13,10 +13,16 @@ jobs:
           go-version: '1.17.5'
 
       - name: Get domline tool
-        run: git clone https://github.com/2kodevs/domline.git
+        run: git clone https://github.com/2kodevs/domline.git domline_src
 
-      - name: Run ls
-        run: ls
+      - name: Build domline
+        working-directory: ./domline_src
+        run: make compile
+
+      - run: ls players
 
       - name: Run check script
-        run: domline/build/domline check --path players --config domline/config.yaml
+        run: |
+          cp domline_src/build/domline .
+          cp domline_src/config.yaml .
+          ./domline check --path players --config config.yaml
