@@ -26,3 +26,8 @@ jobs:
           cp domline_src/build/domline .
           cp domline_src/config.yaml .
           ./domline check --path players --config config.yaml
+
+      - name: Test player vs Random players
+        run: |
+          ./domline play --path players --config config.yaml
+
