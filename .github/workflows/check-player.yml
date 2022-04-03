@@ -5,6 +5,8 @@ on: [pull_request, workflow_dispatch]
 jobs:
   check-player:
     runs-on: ubuntu-latest
+    env:
+      MANAGER_REPO: https://github.com/2kodevs/cooperAItive
     steps:
       - uses: actions/checkout@v2
 
