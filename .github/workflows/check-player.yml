@@ -5,8 +5,6 @@ on: [pull_request, workflow_dispatch]
 jobs:
   check-player:
     runs-on: ubuntu-latest
-    env:
-      MANAGER_REPO: https://github.com/2kodevs/cooperAItive
     steps:
       - uses: actions/checkout@v2
 
@@ -28,8 +26,28 @@ jobs:
           cp domline_src/build/domline .
           cp domline_src/config.yaml .
           ./domline check --path players --config config.yaml
+      
+  test-player:
+    runs-on: ubuntu-latest
+    env:
+      MANAGER_REPO: https://github.com/2kodevs/cooperAItive
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-go@v2
+        with:
+          go-version: '1.17.5'
+
+      - name: Get domline tool
+        run: git clone https://github.com/2kodevs/domline.git domline_src
+
+      - name: Build domline
+        working-directory: ./domline_src
+        run: make compile
 
       - name: Test player vs Random players
         run: |
+          cp domline_src/build/domline .
+          cp domline_src/config.yaml .
           ./domline play --path players --config config.yaml
 
